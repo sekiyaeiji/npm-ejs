@@ -1,3 +1,8 @@
 @charset "utf-8";
 
 // common
+.img {
+  > img {
+    width: 300px;
+  }
+}

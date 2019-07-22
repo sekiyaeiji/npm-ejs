@@ -1,13 +1,6 @@
 #!/bin/sh
 
 version=`node -pe 'require("./package.json").version'`
+json_new=`node -pe 'JSON.stringify(Object.assign(require("./src/html/data/data.json"), {"stat_version": "'${version}'"}))'`
 
-echo {"stat_version": "${version}"}
-
-RESULT_JSON='src/html/data/data2.json'
-
-data=cat src/html/data/data.json | jq '.jobanalyses[0] |= .+ {"stat_version": "${version}"}' \> ${RESULT_JSON} && cat ${RESULT_JSON}
-
-echo {"stat_version": "${version}"}
-
-ejs-cli -b src/html/page '**/*.ejs' -o dist -O src/html/data/data2.json
+ejs-cli -b src/html/page '**/*.ejs' -o dist -O ${json_new}
